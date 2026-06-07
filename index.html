@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Resha!</title>
+  
+  <!-- Tailwind CSS & Bootstrap CSS for responsive layout and rapid styling -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Elegant Cursive font and clean body sans-serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome for UI Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* Force scrolling behavior on both HTML and Body levels */
+    html {
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      height: auto;
+      scroll-behavior: smooth;
+    }
+
+    /* Premium Styling and Global Resets */
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      min-height: 100vh;
+      /* Guaranteed natural scrolling for all mobile displays */
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      -webkit-overflow-scrolling: touch;
+      /* Warm Orange Gradient matching the background of the uploaded image */
+      background: radial-gradient(circle at center, #ff9e2c 0%, #ff6200 60%, #bd3a00 100%);
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* Ensure form fields allow selection and typing on mobile devices */
+    input, textarea {
+      user-select: text !important;
+      -webkit-user-select: text !important;
+    }
+
+    /* Cursive Font Styling for Birthday Greeting */
+    .cursive-title {
+      font-family: 'Great Vibes', cursive;
+      text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 40px rgba(255, 223, 128, 0.4);
+    }
+
+    /* Fixed Interactive Canvas Layer so it stays pinned behind the scrolling content */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      pointer-events: auto; /* Allow clicking balloons on canvas */
+    }
+
+    /* UI Overlay elements sit above canvas */
+    .interactive-ui {
+      z-index: 10;
+    }
+
+    /* Premium Button Hover and Glow Effects */
+    .glow-btn {
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .glow-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(255, 179, 0, 0.5);
+    }
+    .glow-btn:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    /* Soft Animated Background Glow - Fixed so it doesn't scroll */
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.1); }
+    }
+    .bg-glow {
+      position: fixed;
+      top: 25%;
+      left: 25%;
+      width: 50%;
+      height: 50%;
+      background: radial-gradient(circle, rgba(255,233,161,0.4) 0%, rgba(255,130,0,0) 70%);
+      z-index: 1;
+      pointer-events: none;
+      animation: pulseGlow 10s ease-in-out infinite;
+    }
+
+    /* Shimmer effect for texts */
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .shimmer-text {
+      background: linear-gradient(90deg, #ffeaa7, #ffffff, #ffeaa7, #ffd32c, #ffeaa7);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 6s linear infinite;
+    }
+
+    /* Custom Toast Message Stylings */
+    #custom-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(150%);
+      background: rgba(25, 20, 10, 0.9);
+      border: 1px solid rgba(255, 193, 7, 0.3);
+      backdrop-filter: blur(8px);
+      padding: 12px 24px;
+      border-radius: 9999px;
+      color: #fff;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #custom-toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Beautiful CSS Triple Layer Chocolate Cake */
+    .cake-wrapper {
+      position: relative;
+      width: 280px;
+      height: 230px;
+      margin: 10px auto 15px auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    /* Cake Base Plate */
+    .cake-plate {
+      width: 320px;
+      height: 12px;
+      background: #e2e8f0;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3), inset 0 -3px 0 #cbd5e1;
+      z-index: 1;
+    }
+
+    /* Individual Cake Layers */
+    .cake-layer {
+      position: relative;
+      border-radius: 12px 12px 4px 4px;
+      background: linear-gradient(to right, #2b1810, #422216, #2b1810); /* Delicious Dark Chocolate */
+      box-shadow: inset 0 4px 0 rgba(255,255,255,0.1), 0 4px 8px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+    }
+
+    .layer-bottom {
+      width: 260px;
+      height: 60px;
+      z-index: 2;
+    }
+
+    .layer-middle {
+      width: 210px;
+      height: 55px;
+      z-index: 3;
+      margin-bottom: -4px;
+    }
+
+    .layer-top {
+      width: 160px;
+      height: 50px;
+      z-index: 4;
+      margin-bottom: -4px;
+    }
+
+    /* Frosting/Icing drip details */
+    .icing-drips {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 15px;
+      background: #fff; /* Creamy White Icing */
+      border-radius: 12px 12px 0 0;
+    }
+    
+    .icing-drips::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 12px;
+      background-image: radial-gradient(circle at 10px -5px, #fff 12px, transparent 13px);
+      background-size: 20px 20px;
+    }
+
+    /* Chocolate/strawberry cream icing lines between layers */
+    .cream-filling {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: #ff85a2; /* Strawberry Cream layer filling */
+      border-radius: 0 0 4px 4px;
+    }
+
+    /* Sprinkles container */
+    .sprinkles-container {
+      position: absolute;
+      top: 12px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    /* Custom sprinkles rendering */
+    .sprinkle {
+      position: absolute;
+      width: 4px;
+      height: 8px;
+      border-radius: 2px;
+    }
+
+    /* Candle Toppers (21) */
+    .candle-topper {
+      display: flex;
+      gap: 12px;
+      position: absolute;
+      bottom: 155px; /* Sits on top of the cake */
+      z-index: 10;
+    }
+
+    .digit-candle {
+      position: relative;
+      font-size: 3.5rem;
+      font-weight: 800;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(135deg, #06b6d4, #3b82f6); /* Cool Cyan & Blue wax */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+      line-height: 1;
+    }
+
+    /* Lit Candle Wick and Flame */
+    .candle-wick {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 10px;
+      background: #475569;
+      border-radius: 1px;
+    }
+
+    .candle-flame {
+      position: absolute;
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 14px;
+      height: 22px;
+      background: radial-gradient(circle at bottom, #ff5722 0%, #ffeb3b 60%, #ffffff 100%);
+      border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+      box-shadow: 0 0 10px #ffeb3b, 0 0 20px #ff5722;
+      animation: flicker 0.15s ease-in-out infinite alternate;
+      transform-origin: bottom center;
+      transition: all 0.4s ease-out;
+    }
+
+    /* Blown Out Smoke Effect */
+    .candle-smoke {
+      position: absolute;
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 0px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @keyframes smokeDrift {
+      0% { height: 0; opacity: 0.8; transform: translateX(-50%) translateY(0) scaleX(1); }
+      50% { transform: translateX(-80%) translateY(-15px) scaleX(1.5); opacity: 0.5; }
+      100% { height: 25px; transform: translateX(-120%) translateY(-35px) scaleX(2); opacity: 0; }
+    }
+
+    .smoke-active {
+      animation: smokeDrift 1.5s ease-out forwards;
+    }
+
+    @keyframes flicker {
+      0% { transform: translateX(-50%) rotate(-2deg) scaleY(0.95); }
+      100% { transform: translateX(-50%) rotate(2deg) scaleY(1.05); }
+    }
+
+    /* Transitions for Screen Switching */
+    .screen-view {
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .screen-hidden {
+      opacity: 0;
+      transform: translateY(30px);
+      pointer-events: none;
+      position: absolute !important;
+      width: 100%;
+      height: 0;
+      overflow: hidden;
+    }
+
+    /* Interactive Virtual Gifts Styling */
+    .gift-container {
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .gift-box-wrapper {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      transform-style: preserve-3d;
+      transition: transform 0.5s;
+    }
+
+    .gift-box-wrapper:hover {
+      transform: scale(1.05) rotateY(10deg);
+    }
+
+    /* Gift Box Base & Lid Elements */
+    .gift-base {
+      position: absolute;
+      width: 100%;
+      height: 80%;
+      bottom: 0;
+      background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      border: 2px solid #fda4af;
+      overflow: hidden;
+    }
+
+    .gift-lid {
+      position: absolute;
+      width: 108%;
+      height: 24px;
+      top: 14px;
+      left: -4%;
+      background: #f43f5e;
+      border-radius: 4px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      border: 2px solid #fecdd3;
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 10;
+    }
+
+    /* Ribbons & Bows */
+    .gift-ribbon-v {
+      position: absolute;
+      width: 24px;
+      height: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f59e0b; /* Yellow ribbon */
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.15);
+    }
+
+    .gift-ribbon-h {
+      position: absolute;
+      width: 100%;
+      height: 20px;
+      top: 35%;
+      background: #f59e0b;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.15);
+    }
+
+    /* Bow Ties */
+    .gift-bow {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 2px;
+      z-index: 11;
+      transition: all 0.6s ease;
+    }
+
+    .bow-loop {
+      width: 28px;
+      height: 18px;
+      background: #d97706;
+      border: 2px solid #f59e0b;
+      border-radius: 50%;
+    }
+
+    /* Animation classes when Gift Opened */
+    .gift-box-opened .gift-lid {
+      transform: translateY(-80px) rotate(-25deg) scale(0.9);
+      opacity: 0;
+    }
+
+    .gift-box-opened .gift-bow {
+      transform: translate(-50%, -90px) rotate(15deg) scale(0.5);
+      opacity: 0;
+    }
+
+    .gift-content-reveal {
+      position: absolute;
+      top: 30px;
+      left: 5%;
+      width: 90%;
+      height: 80%;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transform: translateY(40px) scale(0.5);
+      opacity: 0;
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 2;
+      border: 2px dashed #f59e0b;
+    }
+
+    .gift-box-opened .gift-content-reveal {
+      transform: translateY(-20px) scale(1.15);
+      opacity: 1;
+      z-index: 20;
+    }
+
+    /* Premium Overlay Modal Styling */
+    .celebration-modal {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform: translate(-50%, -50%) scale(0.85);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .celebration-modal.active {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body class="flex flex-col justify-between relative">
+
+  <!-- Background Lighting Effects -->
+  <div class="bg-glow"></div>
+
+  <!-- Interactive canvas for Stream of Balloons and Confetti Rain -->
+  <canvas id="animationCanvas"></canvas>
+
+  <!-- Interactive Premium UI Layer -->
+  <header class="interactive-ui w-full px-6 py-4 flex justify-between items-center relative">
+    <!-- Empty div on the left to maintain balance and positioning spacing -->
+    <div></div>
+
+    <!-- Celebration Scorecard (Balloons Popped Counter) -->
+    <div class="bg-black/25 text-white backdrop-blur-md px-4 py-2 rounded-full border border-white/10 flex items-center gap-2">
+      <span class="text-xs uppercase tracking-wider text-amber-200/80 font-semibold">Popped:</span>
+      <span id="popScore" class="font-extrabold text-amber-300 text-lg">0</span>
+    </div>
+  </header>
+
+  <!-- ==================== SCREEN 1: WELCOME SCREEN ==================== -->
+  <main id="welcome-screen" class="screen-view interactive-ui flex-grow flex flex-col justify-center items-center text-center px-4 relative py-8">
+    <div class="max-w-2xl transform transition-all duration-700">
+      
+      <!-- Premium Decorative Badge -->
+      <div class="inline-block animate-bounce mb-3 bg-gradient-to-r from-amber-400 to-yellow-500 text-amber-950 text-xs font-bold px-4 py-1.5 rounded-full shadow-lg tracking-widest uppercase">
+        ✨ Today is Extra Special ✨
+      </div>
+
+      <!-- Main Elegant Greeting (Cursive) -->
+      <h1 class="cursive-title text-7xl sm:text-8xl md:text-9xl text-white font-normal mb-2 leading-none select-none tracking-wide drop-shadow-lg">
+        Happy Birthday
+      </h1>
+      
+      <!-- Big Shimmer Name -->
+      <h2 class="cursive-title text-8xl sm:text-9xl md:text-10xl font-bold mb-6 tracking-wider drop-shadow-2xl">
+        <span class="shimmer-text">Resha</span>
+      </h2>
+
+      <!-- Subtle, heartfelt sub-message -->
+      <p class="text-amber-100/90 text-sm sm:text-base md:text-lg max-w-lg mx-auto leading-relaxed px-4 drop-shadow font-light mb-8">
+        Wishing you an incredible year ahead filled with love, laughter, golden memories, and boundless joy! 🎈
+      </p>
+
+      <!-- Action Button to Trigger Navigation/Page Transition -->
+      <div class="flex justify-center">
+        <button id="clickMeBtn" class="glow-btn bg-gradient-to-r from-yellow-400 via-amber-400 to-amber-500 text-amber-950 font-extrabold px-10 py-4 rounded-full text-base sm:text-lg flex items-center gap-3 border border-yellow-300 shadow-xl">
+          <i class="fa-solid fa-gift animate-pulse"></i>
+          Click Me
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== SCREEN 2: HEARTFELT WISH & CAKE SCREEN ==================== -->
+  <main id="wish-screen" class="screen-view screen-hidden interactive-ui flex-grow flex flex-col justify-center items-center text-center px-4 relative py-8">
+    <div class="max-w-2xl transform transition-all duration-700">
+      
+      <!-- Birthday Paragraph -->
+      <div class="bg-black/20 backdrop-blur-md p-5 rounded-2xl border border-white/10 max-w-lg mx-auto mb-4 shadow-2xl">
+        <h3 class="cursive-title text-4xl sm:text-5xl text-amber-300 mb-2">Resha,</h3>
+        <p class="text-white text-xs sm:text-sm md:text-base leading-relaxed font-light drop-shadow">
+          Happy 21st Birthday! Reaching this milestone marks the beginning of an amazing new chapter in your life. May this year unfold beautiful opportunities, unforgettable adventures, and deep happiness. Celebrate today knowing how incredibly special you are to everyone around you. Here is to making a lifetime of beautiful memories starting today! 🌟
+        </p>
+      </div>
+
+      <!-- Bigger Triple Layer Dark Chocolate Cake Container -->
+      <div class="cake-wrapper">
+        <!-- Candle Topper "2" -->
+        <div class="candle-topper" style="left: 65px;">
+          <div class="candle-wick"></div>
+          <div class="candle-flame flame-element"></div>
+          <div class="candle-smoke smoke-element"></div>
+          <span class="digit-candle">2</span>
+        </div>
+        
+        <!-- Candle Topper "1" -->
+        <div class="candle-topper" style="right: 65px;">
+          <div class="candle-wick"></div>
+          <div class="candle-flame flame-element"></div>
+          <div class="candle-smoke smoke-element"></div>
+          <span class="digit-candle">1</span>
+        </div>
+
+        <!-- Layer 3 (Top Chocolate Layer) -->
+        <div class="cake-layer layer-top">
+          <div class="icing-drips"></div>
+          <div class="cream-filling"></div>
+          <div class="sprinkles-container" id="sprinkles-top"></div>
+        </div>
+
+        <!-- Layer 2 (Middle Chocolate Layer) -->
+        <div class="cake-layer layer-middle">
+          <div class="icing-drips"></div>
+          <div class="cream-filling"></div>
+          <div class="sprinkles-container" id="sprinkles-middle"></div>
+        </div>
+
+        <!-- Layer 1 (Bottom Chocolate Layer) -->
+        <div class="cake-layer layer-bottom">
+          <div class="icing-drips"></div>
+          <div class="cream-filling"></div>
+          <div class="sprinkles-container" id="sprinkles-bottom"></div>
+        </div>
+
+        <!-- Serving Plate -->
+        <div class="cake-plate"></div>
+      </div>
+
+      <!-- Make A Wish & Navigation Actions -->
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-3">
+        <button id="makeWishBtn" class="glow-btn bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-white font-extrabold px-8 py-3 rounded-full text-sm sm:text-base flex items-center gap-2 border border-cyan-300 shadow-xl">
+          <i class="fa-solid fa-wand-magic-sparkles animate-spin" style="animation-duration: 3s"></i>
+          Make A Wish
+        </button>
+        <button id="openGiftsNavBtn" class="glow-btn bg-gradient-to-r from-amber-400 to-yellow-500 text-amber-950 font-extrabold px-8 py-3 rounded-full text-sm sm:text-base flex items-center gap-2 border border-yellow-300 shadow-xl">
+          <i class="fa-solid fa-gift animate-bounce"></i>
+          Open Your Gifts
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== SCREEN 3: OPEN YOUR GIFTS SCREEN ==================== -->
+  <main id="gifts-screen" class="screen-view screen-hidden interactive-ui flex-grow flex flex-col justify-center items-center text-center px-4 relative py-8">
+    <div class="max-w-2xl w-full transform transition-all duration-700">
+      
+      <!-- Header instruction -->
+      <div class="mb-8">
+        <h3 class="cursive-title text-5xl sm:text-6xl text-white mb-2">Resha's Birthday Gifts</h3>
+        <p class="text-amber-100/90 text-sm sm:text-base font-light">Tap each gift below to unbox your virtual surprises! 🎁</p>
+      </div>
+
+      <!-- Beautiful Interactive Gift Boxes Side by Side -->
+      <div class="flex flex-wrap justify-center gap-8 md:gap-16 my-8">
+        
+        <!-- Gift Box 1 -->
+        <div id="gift-1" class="gift-container" onclick="openGift(1)">
+          <div class="gift-box-wrapper" id="gift-wrapper-1">
+            <!-- Lid -->
+            <div class="gift-lid">
+              <div class="gift-ribbon-v"></div>
+            </div>
+            <!-- Bow on top -->
+            <div class="gift-bow">
+              <div class="bow-loop"></div>
+              <div class="bow-loop"></div>
+            </div>
+            <!-- Base Box -->
+            <div class="gift-base">
+              <div class="gift-ribbon-v"></div>
+              <div class="gift-ribbon-h"></div>
+            </div>
+            <!-- Revealed Surprise inside (Customizable image placeholder) -->
+            <div class="gift-content-reveal">
+              <span class="text-2xl">💫</span>
+              <p class="text-amber-950 font-extrabold text-xs mt-1 text-center">Gift One!</p>
+              <p class="text-rose-600 font-bold text-[10px] mt-1 text-center leading-tight">A magical year of love and joy!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gift Box 2 -->
+        <div id="gift-2" class="gift-container" onclick="openGift(2)">
+          <div class="gift-box-wrapper" id="gift-wrapper-2">
+            <!-- Lid -->
+            <div class="gift-lid" style="background: #0284c7; border-color: #7dd3fc;">
+              <div class="gift-ribbon-v" style="background: #fbbf24;"></div>
+            </div>
+            <!-- Bow on top -->
+            <div class="gift-bow">
+              <div class="bow-loop" style="background: #d97706; border-color: #fbbf24;"></div>
+              <div class="bow-loop" style="background: #d97706; border-color: #fbbf24;"></div>
+            </div>
+            <!-- Base Box -->
+            <div class="gift-base" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border-color: #7dd3fc;">
+              <div class="gift-ribbon-v" style="background: #fbbf24;"></div>
+              <div class="gift-ribbon-h" style="background: #fbbf24;"></div>
+            </div>
+            <!-- Revealed Surprise inside -->
+            <div class="gift-content-reveal" style="border-color: #0284c7;">
+              <span class="text-2xl">🍽️</span>
+              <p class="text-sky-950 font-extrabold text-xs mt-1 text-center">Gift Two!</p>
+              <p class="text-indigo-600 font-bold text-[10px] mt-1 text-center leading-tight">A grand restaurant experience awaits!</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Dynamic Celebration Unlock Container -->
+      <div id="unlock-trigger-container" class="opacity-0 scale-90 pointer-events-none transition-all duration-700 mt-10">
+        <button id="openInvitationBtn" class="glow-btn bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 font-extrabold px-10 py-4 rounded-full text-base sm:text-lg flex items-center gap-3 border border-yellow-300 shadow-2xl mx-auto">
+          <i class="fa-solid fa-utensils animate-bounce"></i>
+          I'm Taking You Out to a Restaurant for Your Birthday!
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ==================== PREMIUM OVERLAY POPUP MODAL ==================== -->
+  <div id="invitationModal" class="celebration-modal fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-lg bg-slate-900/95 backdrop-blur-xl border border-amber-400/40 rounded-3xl p-6 sm:p-8 shadow-2xl z-50 text-white">
+    
+    <!-- Top Close/Exit Button -->
+    <button id="closeModalBtn" class="absolute top-4 right-4 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 w-8 h-8 rounded-full flex items-center justify-center transition-all" title="Exit">
+      <i class="fa-solid fa-xmark text-sm"></i>
+    </button>
+
+    <!-- Modal Title -->
+    <div class="text-center mb-6">
+      <div class="inline-block bg-amber-400/10 text-amber-300 text-xs px-3 py-1 rounded-full border border-amber-400/20 mb-2 font-semibold uppercase tracking-wider">
+        🍽️ Birthday Dinner Invitation
+      </div>
+      <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-white leading-tight">
+        I'm Taking You Out to a Restaurant for Your Birthday!
+      </h3>
+      <p class="text-xs text-slate-300 mt-1">Fill out the details below and send them directly to me!</p>
+    </div>
+
+    <!-- Questions Form -->
+    <div class="space-y-4">
+      
+      <!-- Question 1: Pick-up Time -->
+      <div>
+        <label for="pickupTime" class="block text-sm font-semibold text-amber-200 mb-1.5 flex items-center gap-2">
+          <i class="fa-solid fa-clock"></i>
+          What time should I pick you up?
+        </label>
+        <input type="time" id="pickupTime" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all text-sm" value="19:00">
+      </div>
+
+      <!-- Question 2: Anything to Add -->
+      <div>
+        <label for="additionalNotes" class="block text-sm font-semibold text-amber-200 mb-1.5 flex items-center gap-2">
+          <i class="fa-solid fa-comment-dots"></i>
+          Anything you'd like to add?
+        </label>
+        <textarea id="additionalNotes" rows="3" placeholder="Any dietary preferences, favorite cuisines, or general excitement!..." class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all text-sm resize-none"></textarea>
+      </div>
+
+      <!-- Copy Action Button -->
+      <div class="pt-2">
+        <button id="copyResponsesBtn" class="w-full glow-btn bg-gradient-to-r from-yellow-400 via-amber-400 to-amber-500 text-amber-950 font-extrabold py-3.5 rounded-xl text-sm sm:text-base flex items-center justify-center gap-2 border border-yellow-300 shadow-lg">
+          <i class="fa-solid fa-copy"></i>
+          Copy and Send To Me
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Celebratory Footer -->
+  <footer class="interactive-ui w-full text-center py-6 px-4 text-white/50 text-xs sm:text-sm tracking-wider flex flex-col sm:flex-row items-center justify-center gap-2">
+    <span>💡 Tip: Click or tap floating balloons to pop them!</span>
+    <span class="hidden sm:inline">•</span>
+    <span>Crafted with love for your special day 💛</span>
+  </footer>
+
+  <!-- Custom Feedback Toast Notification -->
+  <div id="custom-toast">
+    <i class="fa-solid fa-cake-candles text-amber-300 text-lg"></i>
+    <span id="toast-text">Happy Birthday Resha!</span>
+  </div>
+
+  <!-- Complete Canvas Animation Engine -->
+  <script>
+    const canvas = document.getElementById('animationCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Core Simulation settings
+    let balloons = [];
+    let particles = []; // Confetti elements
+    let windForce = 0.2; // Ambient lateral wind
+    let popCount = 0;
+
+    // Palette mimicking the uploaded image
+    const colors = {
+      balloons: [
+        { main: '#ff7700', specular: '#ffb973', string: '#d64f00' }, // Vibrant Orange
+        { main: '#ffaa00', specular: '#ffe599', string: '#b57900' }, // Gold/Yellow
+        { main: '#ffebd4', specular: '#ffffff', string: '#bfb0a1' }, // Warm Off-White
+        { main: '#ff4d00', specular: '#ffa380', string: '#b33600' }, // Deep Warm Red
+        { main: '#ffcc66', specular: '#fff2d4', string: '#cfa244' }  // Golden Sand
+      ],
+      confetti: [
+        '#ffbf00', '#ff9f1c', '#ff5400', '#ffe599', '#ffffff', '#ffd000', '#ff8500'
+      ],
+      rainbowSprinkles: [
+        '#ff4757', '#2ed573', '#1e90ff', '#ffa502', '#ff4757', '#9b59b6', '#eccc68'
+      ]
+    };
+
+    // Configure Responsive Dimensions
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Generate Rainbow Sprinkles on CSS Cake Layers dynamically
+    function populateSprinkles() {
+      const layers = ['sprinkles-top', 'sprinkles-middle', 'sprinkles-bottom'];
+      layers.forEach(layerId => {
+        const container = document.getElementById(layerId);
+        if (!container) return;
+        container.innerHTML = '';
+        const count = layerId === 'sprinkles-top' ? 18 : (layerId === 'sprinkles-middle' ? 24 : 30);
+        
+        for (let i = 0; i < count; i++) {
+          const sprinkle = document.createElement('div');
+          sprinkle.className = 'sprinkle';
+          sprinkle.style.backgroundColor = colors.rainbowSprinkles[Math.floor(Math.random() * colors.rainbowSprinkles.length)];
+          sprinkle.style.left = Math.random() * 90 + '%';
+          sprinkle.style.top = (15 + Math.random() * 60) + '%';
+          sprinkle.style.transform = `rotate(${Math.random() * 360}deg)`;
+          container.appendChild(sprinkle);
+        }
+      });
+    }
+
+    // Balloon Entity
+    class Balloon {
+      constructor(isSpam = false) {
+        this.x = Math.random() * canvas.width;
+        this.y = isSpam ? (canvas.height + 100 + Math.random() * 50) : (canvas.height + 50);
+        this.radiusX = 24 + Math.random() * 16; // Ellipse dimensions
+        this.radiusY = this.radiusX * (1.2 + Math.random() * 0.15);
+        this.colorSet = colors.balloons[Math.floor(Math.random() * colors.balloons.length)];
+        
+        // Physics attributes
+        this.buoyancy = 1.2 + Math.random() * 1.5;
+        this.swaySpeed = 0.01 + Math.random() * 0.02;
+        this.swayDistance = 15 + Math.random() * 25;
+        this.swayOffset = Math.random() * Math.PI * 2;
+        this.stringLength = 80 + Math.random() * 40;
+        this.speedX = 0;
+        
+        // Elastic wobbling properties
+        this.wobbleX = 1;
+        this.wobbleY = 1;
+        this.wobbleSpeed = 0.05 + Math.random() * 0.05;
+        this.wobblePhase = Math.random() * Math.PI * 2;
+      }
+
+      update() {
+        this.y -= this.buoyancy;
+        this.swayOffset += this.swaySpeed;
+        
+        this.speedX = Math.sin(this.swayOffset) * 0.5 + windForce;
+        this.x += this.speedX;
+
+        this.wobblePhase += this.wobbleSpeed;
+        this.wobbleX = 1 + Math.sin(this.wobblePhase) * 0.05;
+        this.wobbleY = 1 - Math.sin(this.wobblePhase) * 0.05;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+
+        // 1. Draw Balloon String
+        ctx.beginPath();
+        ctx.moveTo(0, this.radiusY);
+        const stringWave = Math.sin(this.swayOffset) * 12;
+        ctx.bezierCurveTo(
+          stringWave / 2, this.radiusY + this.stringLength * 0.3,
+          -stringWave / 2, this.radiusY + this.stringLength * 0.6,
+          0, this.radiusY + this.stringLength
+        );
+        ctx.strokeStyle = this.colorSet.string;
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+
+        // 2. Draw Bottom Knot
+        ctx.beginPath();
+        ctx.moveTo(-5, this.radiusY - 2);
+        ctx.lineTo(5, this.radiusY - 2);
+        ctx.lineTo(0, this.radiusY + 6);
+        ctx.closePath();
+        ctx.fillStyle = this.colorSet.main;
+        ctx.fill();
+
+        // 3. Draw Main Balloon Body
+        ctx.beginPath();
+        ctx.ellipse(0, 0, this.radiusX * this.wobbleX, this.radiusY * this.wobbleY, 0, 0, Math.PI * 2);
+        
+        const radialGrad = ctx.createRadialGradient(
+          -this.radiusX * 0.25, -this.radiusY * 0.3, this.radiusX * 0.1,
+          0, 0, this.radiusY
+        );
+        radialGrad.addColorStop(0, this.colorSet.specular);
+        radialGrad.addColorStop(0.3, this.colorSet.main);
+        radialGrad.addColorStop(1, 'rgba(0,0,0,0.15)');
+
+        ctx.fillStyle = radialGrad;
+        ctx.fill();
+
+        // 4. Highlight reflection streak
+        ctx.beginPath();
+        ctx.ellipse(-this.radiusX * 0.32, -this.radiusY * 0.35, this.radiusX * 0.2, this.radiusY * 0.1, Math.PI / 6, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+        ctx.fill();
+
+        ctx.restore();
+      }
+
+      isHit(clickX, clickY) {
+        const tolerance = 15;
+        const distY = Math.abs(clickY - this.y);
+        const distX = Math.abs(clickX - this.x);
+        return (distX < this.radiusX + tolerance && distY < this.radiusY + tolerance);
+      }
+    }
+
+    // Confetti/Paper Flake Entity
+    class Confetti {
+      constructor(fromExplosion = false, x = 0, y = 0) {
+        this.x = fromExplosion ? x : Math.random() * canvas.width;
+        this.y = fromExplosion ? y : -20 - Math.random() * 50;
+        this.size = 5 + Math.random() * 8;
+        this.color = colors.confetti[Math.floor(Math.random() * colors.confetti.length)];
+        
+        this.speedY = fromExplosion ? (Math.random() * 14 - 7) : (1.5 + Math.random() * 2.5);
+        this.speedX = fromExplosion ? (Math.random() * 18 - 9) : (Math.random() * 2 - 1);
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() * 0.1) - 0.05;
+        this.oscillationSpeed = 0.02 + Math.random() * 0.03;
+        this.oscillationPhase = Math.random() * Math.PI;
+        this.shape = Math.random() > 0.4 ? 'rect' : 'circle';
+      }
+
+      update() {
+        this.y += this.speedY;
+        this.rotation += this.rotationSpeed;
+        this.oscillationPhase += this.oscillationSpeed;
+
+        if (this.speedY > 2) {
+          this.speedY -= 0.05;
+        }
+
+        this.x += this.speedX + Math.sin(this.oscillationPhase) * 0.5 + (windForce * 0.5);
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.fillStyle = this.color;
+
+        const perspectiveWidth = Math.sin(this.oscillationPhase) * this.size;
+        
+        if (this.shape === 'rect') {
+          ctx.fillRect(-perspectiveWidth / 2, -this.size / 2, perspectiveWidth, this.size);
+        } else {
+          ctx.beginPath();
+          ctx.ellipse(0, 0, Math.abs(perspectiveWidth) / 2, this.size / 2, 0, 0, Math.PI*2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+    }
+
+    // Interactive Shrapnel/Popped balloon scraps
+    class BalloonScrap {
+      constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.size = 3 + Math.random() * 4;
+        this.speedX = (Math.random() - 0.5) * 14;
+        this.speedY = (Math.random() - 0.5) * 14;
+        this.life = 1.0;
+        this.decay = 0.02 + Math.random() * 0.02;
+        this.gravity = 0.2;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.speedY += this.gravity;
+        this.life -= this.decay;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = Math.max(0, this.life);
+        ctx.beginPath();
+        ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    // Trigger Dynamic Particle Explosions
+    function createExplosion(x, y, balloonColorSet) {
+      for (let i = 0; i < 15; i++) {
+        particles.push(new BalloonScrap(x, y, balloonColorSet.main));
+      }
+      for (let i = 0; i < 20; i++) {
+        const conf = new Confetti(true, x, y);
+        particles.push(conf);
+      }
+    }
+
+    // Trigger Screen-Wide Sparkles
+    function triggerScreenConfettiBlast() {
+      for (let burst = 0; burst < 5; burst++) {
+        setTimeout(() => {
+          const bx = canvas.width * 0.15 + (Math.random() * canvas.width * 0.7);
+          const by = canvas.height * 0.2 + (Math.random() * canvas.height * 0.5);
+          for (let i = 0; i < 35; i++) {
+            particles.push(new Confetti(true, bx, by));
+          }
+        }, burst * 200);
+      }
+    }
+
+    // Endless Stream Spawn Control Loop
+    function manageSimulation() {
+      if (balloons.length < 18) {
+        balloons.push(new Balloon());
+      }
+      
+      if (particles.filter(p => !(p instanceof BalloonScrap)).length < 60) {
+        particles.push(new Confetti());
+      }
+    }
+
+    // Main Canvas Render and Physics Tick
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      manageSimulation();
+
+      // Update & Draw Confetti/Scraps
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.update();
+        p.draw();
+
+        if (p instanceof BalloonScrap) {
+          if (p.life <= 0) particles.splice(i, 1);
+        } else {
+          if (p.y > canvas.height + 20 || p.x < -20 || p.x > canvas.width + 20) {
+            particles.splice(i, 1);
+          }
+        }
+      }
+
+      // Update & Draw Floating Balloons
+      for (let i = balloons.length - 1; i >= 0; i--) {
+        const b = balloons[i];
+        b.update();
+        b.draw();
+
+        if (b.y < -b.radiusY * 2 || b.x < -b.radiusX * 2 || b.x > canvas.width + b.radiusX * 2) {
+          balloons.splice(i, 1);
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    // Initialize simulation loop on window load
+    window.onload = function() {
+      populateSprinkles();
+
+      for (let i = 0; i < 10; i++) {
+        const b = new Balloon();
+        b.y = Math.random() * (canvas.height - 100);
+        balloons.push(b);
+      }
+      for (let i = 0; i < 40; i++) {
+        const c = new Confetti();
+        c.y = Math.random() * canvas.height;
+        particles.push(c);
+      }
+      
+      animate();
+    };
+  </script>
+
+  <!-- Navigation, Interactions & State Logic -->
+  <script>
+    const popScore = document.getElementById('popScore');
+    
+    // Action Buttons
+    const clickMeBtn = document.getElementById('clickMeBtn');
+    const makeWishBtn = document.getElementById('makeWishBtn');
+    const openGiftsNavBtn = document.getElementById('openGiftsNavBtn');
+    const openInvitationBtn = document.getElementById('openInvitationBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const copyResponsesBtn = document.getElementById('copyResponsesBtn');
+
+    // Screen Elements
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const wishScreen = document.getElementById('wish-screen');
+    const giftsScreen = document.getElementById('gifts-screen');
+    const invitationModal = document.getElementById('invitationModal');
+
+    // State Variables
+    let openedGifts = { 1: false, 2: false };
+
+    // Toast Utility
+    const toast = document.getElementById('custom-toast');
+    const toastText = document.getElementById('toast-text');
+    let toastTimeout = null;
+
+    function showToast(text, duration = 3500) {
+      toastText.innerText = text;
+      toast.classList.add('show');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, duration);
+    }
+
+    // Welcome Toast
+    setTimeout(() => {
+      showToast("🎈 Happy Birthday Resha! Click around to explore!", 4000);
+    }, 1500);
+
+    // Welcome Screen -> Cake Screen
+    clickMeBtn.addEventListener('click', () => {
+      welcomeScreen.classList.add('screen-hidden');
+      setTimeout(() => {
+        wishScreen.classList.remove('screen-hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        showToast("🎂 Look at your 21st Birthday Cake!");
+      }, 400);
+    });
+
+    // Blow Candle / Make Wish Trigger
+    let wishMade = false;
+    makeWishBtn.addEventListener('click', () => {
+      if (wishMade) {
+        wishMade = false;
+        
+        document.querySelectorAll('.flame-element').forEach(flame => {
+          flame.style.opacity = '1';
+          flame.style.transform = 'translateX(-50%) scale(1)';
+        });
+
+        document.querySelectorAll('.smoke-element').forEach(smoke => {
+          smoke.classList.remove('smoke-active');
+        });
+
+        makeWishBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles animate-spin" style="animation-duration: 3s"></i> Make A Wish';
+        makeWishBtn.classList.remove('from-amber-400', 'via-yellow-500', 'to-orange-600');
+        makeWishBtn.classList.add('from-cyan-400', 'via-blue-500', 'to-indigo-600');
+        showToast("🔥 Candles Relit! Make another wish!");
+        return;
+      }
+
+      wishMade = true;
+
+      document.querySelectorAll('.flame-element').forEach(flame => {
+        flame.style.opacity = '0';
+        flame.style.transform = 'translateX(-50%) scale(0)';
+      });
+
+      document.querySelectorAll('.smoke-element').forEach(smoke => {
+        smoke.classList.add('smoke-active');
+      });
+
+      triggerScreenConfettiBlast();
+
+      makeWishBtn.innerHTML = '<i class="fa-solid fa-heart animate-pulse"></i> Relight Candles';
+      makeWishBtn.classList.remove('from-cyan-400', 'via-blue-500', 'to-indigo-600');
+      makeWishBtn.classList.add('from-amber-400', 'via-yellow-500', 'to-orange-600');
+
+      showToast("✨ Wish Made! May all your dreams come true! 💖");
+    });
+
+    // Cake Screen -> Gifts Screen
+    openGiftsNavBtn.addEventListener('click', () => {
+      wishScreen.classList.add('screen-hidden');
+      setTimeout(() => {
+        giftsScreen.classList.remove('screen-hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        showToast("🎁 Click on the boxes to open your gifts!");
+      }, 400);
+    });
+
+    // Virtual Gift Opening Logic
+    function openGift(id) {
+      if (openedGifts[id]) return; // Already opened
+      
+      openedGifts[id] = true;
+      const wrapper = document.getElementById(`gift-wrapper-${id}`);
+      wrapper.classList.add('gift-box-opened');
+
+      // Play local sparkle explosion based on the clicked gift's position
+      const rect = document.getElementById(`gift-${id}`).getBoundingClientRect();
+      const originX = rect.left + rect.width / 2;
+      const originY = rect.top + rect.height / 2;
+      
+      for (let i = 0; i < 25; i++) {
+        particles.push(new Confetti(true, originX, originY));
+      }
+
+      showToast(`🎁 Gift ${id} Opened! ✨`);
+
+      // Check if all gifts are opened
+      if (openedGifts[1] && openedGifts[2]) {
+        setTimeout(() => {
+          triggerScreenConfettiBlast();
+          const unlockContainer = document.getElementById('unlock-trigger-container');
+          unlockContainer.classList.remove('opacity-0', 'scale-90', 'pointer-events-none');
+          unlockContainer.classList.add('opacity-100', 'scale-100');
+          showToast("🍽️ Something special has been unlocked below!");
+        }, 800);
+      }
+    }
+
+    // Toggle Restaurant Invitation Modal
+    openInvitationBtn.addEventListener('click', () => {
+      invitationModal.classList.add('active');
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      invitationModal.classList.remove('active');
+    });
+
+    // Copy Responses to Clipboard Utility (Safe Iframe method)
+    copyResponsesBtn.addEventListener('click', () => {
+      const timeVal = document.getElementById('pickupTime').value;
+      const notesVal = document.getElementById('additionalNotes').value;
+
+      // Formatting responses beautifully
+      const formattedMessage = `Hey! 🍽️✨ Here are my answers for my Birthday dinner invitation:\n\n` +
+                               `⏰ Pick-up Time: ${timeVal || 'Not specified'}\n` +
+                               `📝 Anything to add: ${notesVal || 'Nothing to add!'}\n\n` +
+                               `Can't wait! 💖`;
+
+      // Safe input selection copy
+      const textarea = document.createElement('textarea');
+      textarea.value = formattedMessage;
+      textarea.style.position = 'fixed'; // Avoid scrolling view on focus
+      document.body.appendChild(textarea);
+      textarea.select();
+      
+      try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+          showToast("📋 Responses copied! Send them directly to me! 📱");
+        } else {
+          showToast("⚠️ Failed to copy. Please copy manually!");
+        }
+      } catch (err) {
+        showToast("⚠️ Clipboard blocked, please copy manually!");
+      }
+      
+      document.body.removeChild(textarea);
+    });
+
+    // Tap/Click Balloon Collision Detection
+    function handlePopInteraction(clientX, clientY) {
+      for (let i = balloons.length - 1; i >= 0; i--) {
+        const b = balloons[i];
+        if (b.isHit(clientX, clientY)) {
+          createExplosion(b.x, b.y, b.colorSet);
+          balloons.splice(i, 1);
+          popCount++;
+          popScore.innerText = popCount;
+          break;
+        }
+      }
+    }
+
+    // Mouse support
+    window.addEventListener('mousedown', (e) => {
+      if (e.target.closest('button') || e.target.closest('header') || e.target.closest('footer') || e.target.closest('.gift-container') || e.target.closest('#invitationModal')) return;
+      handlePopInteraction(e.clientX, e.clientY);
+    });
+
+    // Touch support (mobile-friendly playability)
+    window.addEventListener('touchstart', (e) => {
+      if (e.target.closest('button') || e.target.closest('header') || e.target.closest('footer') || e.target.closest('.gift-container') || e.target.closest('#invitationModal')) return;
+      const touch = e.touches[0];
+      handlePopInteraction(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+  </script>
+</body>
+</html>
